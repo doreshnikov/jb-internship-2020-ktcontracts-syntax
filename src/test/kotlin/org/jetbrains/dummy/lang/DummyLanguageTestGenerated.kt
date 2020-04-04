@@ -4,12 +4,12 @@ import org.junit.Test
 
 class DummyLanguageTestGenerated : AbstractDummyLanguageTest() {
     @Test
-    fun testBad() {
-        doTest("testData\\bad.dummy")
+    fun testAllFails() {
+        doTest("testData\\variables\\allFails.dummy")
     }
     
     @Test
-    fun testGood() {
-        doTest("testData\\good.dummy")
+    fun testAllOk() {
+        doTest("testData\\variables\\allOk.dummy")
     }
 }

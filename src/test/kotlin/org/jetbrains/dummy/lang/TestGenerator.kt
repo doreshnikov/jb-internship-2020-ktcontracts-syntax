@@ -9,12 +9,6 @@ fun main() {
         testDataRoot = "testData",
         abstractTestClassName = "AbstractDummyLanguageTest"
     )
-
-//    Пример того, как сгенерировать тесты для файлов в директории `testData/someOtherTests`
-//    generateTests(
-//        testDataRoot = "testData/someOtherTests",
-//        abstractTestClassName = "AbstractDummyLanguageTest"
-//    )
 }
 
 // Заменил разделитель из-за проблем "/" на Windows
@@ -32,6 +26,7 @@ private val SEPARATOR = File.separator
  * Генератор создаёт тесты только для тестовых файлов, которые находятся непосредственно в
  *     переданной директории, и не ходит по вложенным директориям
  */
+@Suppress("SameParameterValue")
 private fun generateTests(testDataRoot: String, abstractTestClassName: String) {
     val testDataDir = File(testDataRoot)
     val parentPrefix = testDataDir.absolutePath + SEPARATOR
