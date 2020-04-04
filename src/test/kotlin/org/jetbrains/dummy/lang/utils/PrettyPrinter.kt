@@ -12,6 +12,12 @@ class PrettyPrinter(
     private val outputStream = PrintStream(outputStream)
     private var indentCounter: Int = 0
 
+    companion object {
+        fun escape(s: String) : String {
+            return s.replace("\\", "\\\\")
+        }
+    }
+
     fun println(vararg strings: String) {
         for (i in 1..indentCounter) {
             outputStream.print(indent)

@@ -1,5 +1,6 @@
 package org.jetbrains.dummy.lang
 
+import org.jetbrains.dummy.lang.utils.PrettyPrinter
 import org.jetbrains.dummy.lang.utils.prettyPrinter
 import java.io.File
 
@@ -16,7 +17,9 @@ fun main() {
 //    )
 }
 
-private const val SEPARATOR = "/"
+// Заменил разделитель из-за проблем "/" на Windows
+// private const val SEPARATOR = "/"
+private val SEPARATOR = File.separator
 
 /**
  * [testDataRoot] -- относительный путь к директории, в которой хранятся тестовые файлы
@@ -38,7 +41,7 @@ private fun generateTests(testDataRoot: String, abstractTestClassName: String) {
             it.absolutePath.removePrefix(parentPrefix)
         }.sorted().toList()
 
-    val commonPrefix = parentPrefix.removePrefix(File(".").absolutePath.dropLast(1))
+    val commonPrefix = PrettyPrinter.escape(parentPrefix.removePrefix(File(".").absolutePath.dropLast(1)))
     val generatedTestName = abstractTestClassName.replace("Abstract", "") + "Generated"
 
     File("src/test/kotlin/org/jetbrains/dummy/lang/$generatedTestName.kt").prettyPrinter().use { printer ->
