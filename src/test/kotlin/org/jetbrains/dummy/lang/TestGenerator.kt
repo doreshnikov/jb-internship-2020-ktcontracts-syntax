@@ -16,6 +16,8 @@ fun main() {
 //    )
 }
 
+private const val SEPARATOR = "/"
+
 /**
  * [testDataRoot] -- относительный путь к директории, в которой хранятся тестовые файлы
  * [abstractTestClassName] -- имя абстрактного тестового класса, на основе которого будут сгенерированны тесты
@@ -29,7 +31,7 @@ fun main() {
  */
 private fun generateTests(testDataRoot: String, abstractTestClassName: String) {
     val testDataDir = File(testDataRoot)
-    val parentPrefix = testDataDir.absolutePath + File.separator
+    val parentPrefix = testDataDir.absolutePath + SEPARATOR
     val fileNames = testDataDir.listFiles()!!
         .filter { it.extension == "dummy" }
         .map {
