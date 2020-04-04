@@ -1,4 +1,4 @@
-package org.jetbrains.dummy.lang
+package org.jetbrains.dummy.lang.check
 
 import org.jetbrains.dummy.lang.tree.File
 

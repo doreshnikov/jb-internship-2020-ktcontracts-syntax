@@ -1,5 +1,7 @@
 package org.jetbrains.dummy.lang
 
+import org.jetbrains.dummy.lang.check.AbstractChecker
+import org.jetbrains.dummy.lang.check.VariableInitializationChecker
 import java.io.OutputStream
 
 class DummyLanguageAnalyzer(outputStream: OutputStream) {
