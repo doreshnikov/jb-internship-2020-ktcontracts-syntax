@@ -1,13 +1,15 @@
 package org.jetbrains.dummy.lang
 
 import org.jetbrains.dummy.lang.check.AbstractChecker
+import org.jetbrains.dummy.lang.check.FunctionCallsChecker
 import org.jetbrains.dummy.lang.check.VariableOperationOrderChecker
 import java.io.OutputStream
 
 class DummyLanguageAnalyzer(outputStream: OutputStream) {
     companion object {
         private val CHECKERS: List<(DiagnosticReporter) -> AbstractChecker> = listOf(
-            ::VariableOperationOrderChecker
+            ::VariableOperationOrderChecker,
+            ::FunctionCallsChecker
         )
     }
 

@@ -1,0 +1,15 @@
+fun test() {
+    foo(1);
+    missing();
+}
+
+fun foo(x) {
+    bar(x);
+    bar(x, x);
+}
+
+fun bar(a1) {}
+
+fun bar(a2, a3, a4) {}
+
+fun bar(a5) {}

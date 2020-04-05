@@ -5,6 +5,7 @@ import org.jetbrains.dummy.lang.tree.*
 import javax.swing.plaf.nimbus.State
 
 class VariableOperationOrderChecker(private val reporter: DiagnosticReporter) : AbstractChecker() {
+
     override fun inspect(file: File) {
         file.functions.forEach { visit(it) }
     }
@@ -102,4 +103,5 @@ class VariableOperationOrderChecker(private val reporter: DiagnosticReporter) : 
     private fun reportAccessBeforeInitialization(access: VariableAccess) {
         reporter.report(access, "Variable '${access.name}' is accessed before initialization")
     }
+
 }
