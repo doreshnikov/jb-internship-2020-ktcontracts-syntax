@@ -39,6 +39,11 @@ fun scoped_variable_test(y) {
 }
 
 fun main() {
+    var z = 3;
+    var t = 4;
+    if (t) {
+        var t = 5;
+    }
     simple_test();
-    scoped_variable_test(1);
+    scoped_variable_test(t);
 }

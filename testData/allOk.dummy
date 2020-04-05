@@ -5,8 +5,12 @@ fun main() {
     var b;
     b = true;
     if (b) {
-        bar(x);
+        bar(x, b);
     }
 }
 
 fun bar(x) {}
+
+fun bar(x, y) {
+    return bar(y, x);
+}

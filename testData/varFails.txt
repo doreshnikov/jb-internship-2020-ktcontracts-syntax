@@ -10,3 +10,6 @@ ERROR: line 29: Variable 'y' is accessed before initialization
 WARNING: line 34: Declaration of 'y' foreshadows the higher-level declaration on line 19
 WARNING: line 36: Declaration of 'y' foreshadows the higher-level declaration on line 34
 ERROR: line 37: Variable 'y' is accessed before initialization
+WARNING: line 45: Declaration of 't' foreshadows the higher-level declaration on line 43
+WARNING: line 45: Variable 't' is declared but is never used
+WARNING: line 42: Variable 'z' is declared but is never used

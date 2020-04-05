@@ -3,7 +3,7 @@ package org.jetbrains.dummy.lang.check
 import org.jetbrains.dummy.lang.DiagnosticReporter
 import org.jetbrains.dummy.lang.tree.*
 
-class VariableOperationOrderChecker(private val reporter: DiagnosticReporter) : AbstractChecker() {
+class VariableOperationsOrderChecker(private val reporter: DiagnosticReporter) : AbstractChecker() {
 
     override fun inspect(file: File) {
         file.functions.forEach { visit(it) }
@@ -11,10 +11,19 @@ class VariableOperationOrderChecker(private val reporter: DiagnosticReporter) : 
 
     private sealed class DeclarationElement {
         abstract fun get(): Element
+        abstract fun name1(): String
+        fun line1() = get().line
+
+        val name: String get() = name1()
+        val line: Int get() = line1()
 
         class Explicit(val element: VariableDeclaration) : DeclarationElement() {
             override fun get(): VariableDeclaration {
                 return element
+            }
+
+            override fun name1(): String {
+                return element.name
             }
         }
 
@@ -22,14 +31,36 @@ class VariableOperationOrderChecker(private val reporter: DiagnosticReporter) : 
             override fun get(): FunctionDeclaration {
                 return element
             }
+
+            override fun name1(): String {
+                return element.name
+            }
         }
     }
 
     private sealed class Status {
+        var accesses = 0
+
+        open fun getLocation(): DeclarationElement {
+            error("This status has no declaration")
+        }
+
         object Undeclared : Status()
-        class Declared(val declaration: DeclarationElement) : Status()
+
+        class Declared(val declaration: DeclarationElement) : Status() {
+            override fun getLocation(): DeclarationElement {
+                return declaration
+            }
+        }
+
         class Initialized(val declaration: DeclarationElement) : Status() {
-            constructor(declared: Declared) : this(declared.declaration)
+            constructor(declared: Declared) : this(declared.declaration) {
+                accesses = declared.accesses
+            }
+
+            override fun getLocation(): DeclarationElement {
+                return declaration
+            }
         }
     }
 
@@ -47,25 +78,30 @@ class VariableOperationOrderChecker(private val reporter: DiagnosticReporter) : 
             levelInfo.add(HashMap())
         }
 
-        private fun cleanup() {
-            for (key in levelInfo[level].keys) {
+        private fun cleanup(): List<DeclarationElement> {
+            val unused = ArrayList<DeclarationElement>()
+            for ((key, value) in levelInfo[level]) {
                 varLevels[key]!!.also {
                     it.removeAt(it.lastIndex)
                     if (it.isEmpty()) {
                         varLevels.remove(key)
                     }
                 }
+                if (value.accesses == 0) {
+                    unused.add(value.getLocation())
+                }
             }
             levelInfo.removeAt(level)
             level--
+            return unused
         }
 
-        fun nextLevel(block: () -> Unit) {
+        fun nextLevel(block: () -> Unit): List<DeclarationElement> {
             allocate()
             try {
                 block()
             } finally {
-                cleanup()
+                return cleanup()
             }
         }
 
@@ -119,12 +155,17 @@ class VariableOperationOrderChecker(private val reporter: DiagnosticReporter) : 
     }
 
     private fun Scope.access(access: VariableAccess) {
-        when (get(access.name)) {
+        when (val status = get(access.name)) {
             // report (... <undef> ...)
             is Status.Undeclared -> reportUndefinedVariableAccess(access, access.name)
             // report (... <no-init> ...)
-            is Status.Declared -> reportAccessBeforeInitialization(access)
+            is Status.Declared -> reportAccessBeforeInitialization(access).also { status.accesses++ }
+            is Status.Initialized -> status.accesses++
         }
+    }
+
+    private fun Scope.checkedNextLevel(block: () -> Unit) {
+        nextLevel(block).forEach(::warnUnusedVariable)
     }
 
     private fun visit(function: FunctionDeclaration) {
@@ -135,7 +176,7 @@ class VariableOperationOrderChecker(private val reporter: DiagnosticReporter) : 
     }
 
     private fun visit(block: Block, scope: Scope) {
-        scope.nextLevel {
+        scope.checkedNextLevel {
             block.statements.forEach { visit(it, scope) }
         }
     }
@@ -167,11 +208,15 @@ class VariableOperationOrderChecker(private val reporter: DiagnosticReporter) : 
         }
     }
 
+    private fun warnUnusedVariable(declaration: DeclarationElement) {
+        reporter.warn(declaration.get(), "Variable '${declaration.name}' is declared but is never used")
+    }
+
     private fun warnNameForeshadowing(declaration: VariableDeclaration, previous: DeclarationElement) {
         reporter.warn(
             declaration,
             "Declaration of '${declaration.name}' foreshadows the higher-level " +
-                    "declaration on line ${previous.get().line}"
+                    "declaration on line ${previous.line}"
         )
     }
 
@@ -179,7 +224,7 @@ class VariableOperationOrderChecker(private val reporter: DiagnosticReporter) : 
         reporter.report(
             declaration,
             "Variable '${declaration.name}' is already declared " +
-                    "on line ${previous.get().line} in visible scope"
+                    "on line ${previous.line} in visible scope"
         )
     }
 
