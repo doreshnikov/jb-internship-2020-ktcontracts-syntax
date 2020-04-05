@@ -12,4 +12,8 @@ class DiagnosticReporter(
     fun report(element: Element, message: String) {
         outputStream.println("ERROR: line ${element.line}: $message")
     }
+
+    fun warn(element: Element, message: String) {
+        outputStream.println("WARNING: line ${element.line}: $message")
+    }
 }

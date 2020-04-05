@@ -1,15 +1,39 @@
-fun test() {
+fun foo(x) {}
+
+fun simple_test() {
     var x;
-    bar(x);
+    foo(x);
     x = 1;
 
-    bar(y);
-    var y = 2;
+    foo(y);
+    var y;
+    if (y) {
+        return y;
+    }
+    y = 2;
 
     var x;
     var x = 3;
 }
 
-fun bar(x) {
-    var x = 2;
+fun scoped_variable_test(y) {
+    if (true) {
+        var x = 1;
+        foo(x);
+    } else {
+        foo(x);
+    }
+
+    if (true) {
+        var y;
+        foo(y);
+    } else {
+        foo(y);
+    }
+
+    var y = 1;
+    if (y) {
+        var y;
+        return y;
+    }
 }
