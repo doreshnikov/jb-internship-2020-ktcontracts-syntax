@@ -37,3 +37,8 @@ fun scoped_variable_test(y) {
         return y;
     }
 }
+
+fun main() {
+    simple_test();
+    scoped_variable_test(1);
+}

@@ -1,4 +1,4 @@
-fun test() {
+fun main() {
     var x = 1;
     bar(x);
 

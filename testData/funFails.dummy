@@ -13,3 +13,7 @@ fun bar(a1) {}
 fun bar(a2, a3, a4) {}
 
 fun bar(a5) {}
+
+fun main() {
+    test();
+}
