@@ -8,11 +8,21 @@ fun foo(x) {
     bar(x, x);
 }
 
-fun bar(a1) {}
+fun bar(a1) {
+    return a1;
+}
 
-fun bar(a2, a3, a4) {}
+fun bar(a2, a3, a4) {
+    if (a2) {
+        if (a3) {
+            return a4;
+        }
+    }
+}
 
-fun bar(a5) {}
+fun bar(a5) {
+    return a5;
+}
 
 fun main() {
     test();

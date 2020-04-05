@@ -9,7 +9,9 @@ fun main() {
     }
 }
 
-fun bar(x) {}
+fun bar(x) {
+    return x;
+}
 
 fun bar(x, y) {
     return bar(y, x);

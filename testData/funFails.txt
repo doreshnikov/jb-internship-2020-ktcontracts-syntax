@@ -1,4 +1,4 @@
-ERROR: line 15: Function 'bar' with exactly 1 argument(s) is already declared on line 11
+ERROR: line 23: Function 'bar' with exactly 1 argument(s) is already declared on line 11
 ERROR: line 3: Function 'missing' is called but is not declared
 ERROR: line 8: No function 'bar' with exactly 2 arguments
-WARNING: line 13: Function 'bar' is declared but is never used
+WARNING: line 15: Function 'bar' is declared but is never used

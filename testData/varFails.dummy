@@ -1,4 +1,10 @@
-fun foo(x) {}
+fun foo(x) {
+    if (x) {
+        return 1;
+    } else {
+        return 2;
+    }
+}
 
 fun simple_test() {
     var x;
@@ -16,7 +22,7 @@ fun simple_test() {
     var x = 3;
 }
 
-fun scoped_variable_test(y) {
+fun scoped_variable_test(y, a) {
     if (true) {
         var x = 1;
         foo(x);
@@ -45,5 +51,5 @@ fun main() {
         var t = 5;
     }
     simple_test();
-    scoped_variable_test(t);
+    scoped_variable_test(t, 1);
 }

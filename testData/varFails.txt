@@ -1,15 +1,16 @@
-ERROR: line 5: Variable 'x' is accessed before initialization
-ERROR: line 8: Variable 'y' is accessed but is not declared
-ERROR: line 10: Variable 'y' is accessed before initialization
-ERROR: line 11: Variable 'y' is accessed before initialization
-ERROR: line 15: Variable 'x' is already declared on line 4 in visible scope
-ERROR: line 16: Variable 'x' is already declared on line 4 in visible scope
-ERROR: line 24: Variable 'x' is accessed but is not declared
-WARNING: line 28: Declaration of 'y' foreshadows the higher-level declaration on line 19
-ERROR: line 29: Variable 'y' is accessed before initialization
-WARNING: line 34: Declaration of 'y' foreshadows the higher-level declaration on line 19
-WARNING: line 36: Declaration of 'y' foreshadows the higher-level declaration on line 34
-ERROR: line 37: Variable 'y' is accessed before initialization
-WARNING: line 45: Declaration of 't' foreshadows the higher-level declaration on line 43
-WARNING: line 45: Variable 't' is declared but is never used
-WARNING: line 42: Variable 'z' is declared but is never used
+ERROR: line 11: Variable 'x' is accessed before initialization
+ERROR: line 14: Variable 'y' is accessed but is not declared
+ERROR: line 16: Variable 'y' is accessed before initialization
+ERROR: line 17: Variable 'y' is accessed before initialization
+ERROR: line 21: Variable 'x' is already declared on line 10 in visible scope
+ERROR: line 22: Variable 'x' is already declared on line 10 in visible scope
+ERROR: line 30: Variable 'x' is accessed but is not declared
+WARNING: line 34: Declaration of 'y' foreshadows the higher-level declaration on line 25
+ERROR: line 35: Variable 'y' is accessed before initialization
+WARNING: line 40: Declaration of 'y' foreshadows the higher-level declaration on line 25
+WARNING: line 42: Declaration of 'y' foreshadows the higher-level declaration on line 40
+ERROR: line 43: Variable 'y' is accessed before initialization
+WARNING: line 25: Argument 'a' is never used
+WARNING: line 51: Declaration of 't' foreshadows the higher-level declaration on line 49
+WARNING: line 51: Variable 't' is declared but is never used
+WARNING: line 48: Variable 'z' is declared but is never used

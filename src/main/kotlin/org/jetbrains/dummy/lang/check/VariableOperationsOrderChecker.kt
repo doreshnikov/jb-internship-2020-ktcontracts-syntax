@@ -27,13 +27,13 @@ class VariableOperationsOrderChecker(private val reporter: DiagnosticReporter) :
             }
         }
 
-        class Argument(val element: FunctionDeclaration) : DeclarationElement() {
+        class Argument(val element: FunctionDeclaration, private val idx: Int) : DeclarationElement() {
             override fun get(): FunctionDeclaration {
                 return element
             }
 
             override fun name1(): String {
-                return element.name
+                return element.parameters[idx]
             }
         }
     }
@@ -170,9 +170,11 @@ class VariableOperationsOrderChecker(private val reporter: DiagnosticReporter) :
 
     private fun visit(function: FunctionDeclaration) {
         val scope = Scope()
-        val location = DeclarationElement.Argument(function)
-        function.parameters.forEach { scope[it] = Status.Initialized(location) }
-        visit(function.body, scope)
+        val location = { i: Int -> DeclarationElement.Argument(function, i) }
+        scope.checkedNextLevel {
+            function.parameters.forEachIndexed { i, arg -> scope[arg] = Status.Initialized(location(i)) }
+            visit(function.body, scope)
+        }
     }
 
     private fun visit(block: Block, scope: Scope) {
@@ -209,7 +211,15 @@ class VariableOperationsOrderChecker(private val reporter: DiagnosticReporter) :
     }
 
     private fun warnUnusedVariable(declaration: DeclarationElement) {
-        reporter.warn(declaration.get(), "Variable '${declaration.name}' is declared but is never used")
+        when (declaration) {
+            is DeclarationElement.Explicit ->
+                reporter.warn(
+                    declaration.get(),
+                    "Variable '${declaration.name}' is declared but is never used"
+                )
+            is DeclarationElement.Argument ->
+                reporter.warn(declaration.get(), "Argument '${declaration.name}' is never used")
+        }
     }
 
     private fun warnNameForeshadowing(declaration: VariableDeclaration, previous: DeclarationElement) {
