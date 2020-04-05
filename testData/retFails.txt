@@ -1,0 +1,11 @@
+WARNING: line 3: Variable 'x' is declared but is never used
+WARNING: line 21: Variable 'y' is declared but is never used
+WARNING: line 89: Argument 'x' is never used
+WARNING: line 97: Argument 'x' is never used
+WARNING: line 3: Unreachable code after full coverage of 'return' statements
+WARNING: line 21: Unreachable code after full coverage of 'return' statements
+ERROR: line 97: Some of the 'if' cases are not covered with 'return' statement but 'test_coverage_value' should have a value-return
+ERROR: line 109: Different kinds of 'return' statements: diverges from line 107
+ERROR: line 117: Different kinds of 'return' statements: diverges from line 114
+ERROR: line 119: Different kinds of 'return' statements: diverges from line 114
+ERROR: line 130: Different kinds of 'return' statements: diverges from line 125

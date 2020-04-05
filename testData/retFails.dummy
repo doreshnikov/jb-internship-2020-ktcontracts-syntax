@@ -1,0 +1,144 @@
+fun test_unreachable() {
+    return 1;
+    var x;
+}
+
+fun test_reachable() {
+    var x = 1;
+    return x;
+}
+
+fun test_unreachable_if(x) {
+    if (x) {
+        return 1;
+    } else {
+        if (true) {
+            return 2;
+        } else {
+            return 3;
+        }
+    }
+    var y;
+}
+
+fun test_reachable_if(x) {
+    if (x) {
+        if (true) {
+            1;
+        } else {
+            return 2;
+        }
+    } else {
+        if (true) {
+            return 3;
+        } else {
+            return 4;
+        }
+    }
+
+    if (x) {
+        if (true) {
+            return 1;
+        } else {
+            2;
+        }
+    } else {
+        if (true) {
+            return 3;
+        } else {
+            return 4;
+        }
+    }
+
+    if (x) {
+        if (true) {
+            return 1;
+        } else {
+            return 2;
+        }
+    } else {
+        if (true) {
+            3;
+        } else {
+            return 4;
+        }
+    }
+
+    if (x) {
+        if (true) {
+            return 1;
+        } else {
+            return 2;
+        }
+    } else {
+        if (true) {
+            return 3;
+        } else {
+            4;
+        }
+    }
+
+    if (x) {
+        return 10;
+    }
+
+    var y = 1;
+    return y;
+}
+
+fun test_coverage(x) {
+    if (true) {
+        return;
+    } else {
+        x = 2;
+    }
+}
+
+fun test_coverage_value(x) {
+    if (true) {
+        return 1;
+    } else {
+        x = 2;
+    }
+}
+
+fun test_collision(x) {
+    if (x) {
+        return 1;
+    }
+    return;
+}
+
+fun test_collision_if(x) {
+    if (x) {
+        return 1;
+    }
+    if (x) {
+        return;
+    } else {
+        return;
+    }
+}
+
+fun test_collision_in_if(x) {
+    if (x) {
+        return 1;
+    }
+    if (x) {
+        return 2;
+    } else {
+        return;
+    }
+}
+
+fun main() {
+    test_unreachable();
+    test_reachable();
+    test_unreachable_if(1);
+    test_reachable_if(2);
+    test_coverage(3);
+    test_coverage_value(4);
+    test_collision(5);
+    test_collision_if(6);
+    test_collision_in_if(7);
+}

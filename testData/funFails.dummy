@@ -18,6 +18,7 @@ fun bar(a2, a3, a4) {
             return a4;
         }
     }
+    return a2;
 }
 
 fun bar(a5) {

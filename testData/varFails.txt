@@ -11,6 +11,6 @@ WARNING: line 40: Declaration of 'y' foreshadows the higher-level declaration on
 WARNING: line 42: Declaration of 'y' foreshadows the higher-level declaration on line 40
 ERROR: line 43: Variable 'y' is accessed before initialization
 WARNING: line 25: Argument 'a' is never used
-WARNING: line 51: Declaration of 't' foreshadows the higher-level declaration on line 49
-WARNING: line 51: Variable 't' is declared but is never used
-WARNING: line 48: Variable 'z' is declared but is never used
+WARNING: line 52: Declaration of 't' foreshadows the higher-level declaration on line 50
+WARNING: line 52: Variable 't' is declared but is never used
+WARNING: line 49: Variable 'z' is declared but is never used

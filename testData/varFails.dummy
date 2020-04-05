@@ -42,6 +42,7 @@ fun scoped_variable_test(y, a) {
         var y;
         return y;
     }
+    return y;
 }
 
 fun main() {

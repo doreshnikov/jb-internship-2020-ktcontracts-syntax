@@ -14,6 +14,11 @@ class DummyLanguageTestGenerated : AbstractDummyLanguageTest() {
     }
     
     @Test
+    fun testRetFails() {
+        doTest("testData\\retFails.dummy")
+    }
+    
+    @Test
     fun testVarFails() {
         doTest("testData\\varFails.dummy")
     }
